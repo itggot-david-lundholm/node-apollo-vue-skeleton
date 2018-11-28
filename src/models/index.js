@@ -1,18 +1,18 @@
 import Sequelize from 'sequelize'
-
-console.log(process.env.DATABASE)
+import 'dotenv/config'
 
 const sequelize = new Sequelize(
     process.env.DATABASE,
     process.env.DATABASE_USER,
     process.env.DATABASE_PASSWORD,
     {
+        operatorAliases: false,
         dialect: 'postgres'
     }
 )
 
 const models = {
-    ExampleModel: sequelize.import('./ExampleModel'),
+    User: sequelize.import('./User'),
 }
 
 Object.keys(models).forEach( key => {
