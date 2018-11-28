@@ -12,7 +12,6 @@ import typeDefs from './schema'
 import resolvers from './resolvers'
 import schemaDirectives from './directives'
 import models, {sequelize} from './models'
-import { createUsersWithMessages, createMessageBulk } from './schema/seeder';
 
 const app = express()
 
@@ -55,24 +54,10 @@ const server = new ApolloServer({
 server.applyMiddleware({ app, path: '/graphql' })
 
 const httpServer = http.createServer(app)
+
 server.installSubscriptionHandlers(httpServer)
 
-const eraseDatabaseOnSync = true;
-
-sequelize.sync({ force: eraseDatabaseOnSync }).then( async () => {
-
-    if (eraseDatabaseOnSync) {
-        await createUsersWithMessages()
-        const user = await models.User.findAll({
-            where: {
-                username: 'rwieruch'
-            }
-        })
-        await createMessageBulk(user)
-    }
-    
-    httpServer.listen({ port: 8000 }, () => {
-        console.log('Apollo Server on http://localhost:8000/graphql')
-    })
+httpServer.listen({ port: 8000 }, () => {
+    console.log('Apollo Server on http://localhost:8000/graphql')
 })
 
