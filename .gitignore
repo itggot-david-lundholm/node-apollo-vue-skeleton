@@ -62,3 +62,5 @@ typings/
 
 # IDE files
 .vscode/
+
+.DS_Store

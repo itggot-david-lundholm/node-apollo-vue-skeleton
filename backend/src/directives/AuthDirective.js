@@ -1,5 +1,5 @@
 import { SchemaDirectiveVisitor } from "graphql-tools";
-import {AuthenticationError, AuthorizationError} from 'apollo-server-express'
+import { AuthenticationError } from 'apollo-server-express'
 import models from '../models'
 import {defaultFieldResolver} from 'graphql'
 
@@ -36,6 +36,7 @@ export class AuthDirective extends SchemaDirectiveVisitor{
                 if(!context.me){
                     throw new AuthenticationError('Not authenticated')
                 }
+
                 const user = await models.User.findByPk( context.me.id )
                 if( user.role !== requiredRole && user.role !== 'ADMIN'){
                     throw new AuthenticationError('Not authorized')

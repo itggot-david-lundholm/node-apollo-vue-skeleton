@@ -8,8 +8,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Install Node.js
-Install Postgresql
+* Install Node.js
+* Install Postgresql
 
 ### Installing
 
